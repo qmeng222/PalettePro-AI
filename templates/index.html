@@ -5,68 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PalettePro-AI</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-      }
-
-      .container {
-        background-color: black;
-        width: 100%;
-        height: 100vh;
-        display: flex;
-      }
-
-      .color {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        cursor: pointer;
-        transition: 0.2s opacity;
-      }
-
-      .color:active {
-        opacity: 0.8;
-      }
-
-      .color span {
-        font-size: 3rem;
-        margin-bottom: 2rem;
-        color: white;
-        text-shadow: 1px 1px black;
-      }
-
-      #form {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      #form input[type="text"] {
-        font-size: 2rem;
-        outline: 0;
-        border: 2px solid white;
-        background-color: #f2f2f2;
-        padding: 20px;
-        width: 400px;
-      }
-
-      .btn {
-        background-color: #4caf50;
-        color: white;
-        border: 2px solid white;
-        padding: 20px;
-        font-size: 2rem;
-        transition: 0.2s opacity;
-      }
-
-      .btn:hover {
-        opacity: 0.8;
-      }
-    </style>
+    <link rel="stylesheet" href="app.css" />
   </head>
   <body>
     <div class="container"></div>
@@ -76,48 +15,6 @@
       <button class="btn">Submit</button>
     </form>
 
-    <script>
-      const form = document.querySelector("#form");
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        // "query" is the name attribute of the input field within the form:
-        const query = form.elements.query.value;
-        // console.log(query);
-        fetch("/palette", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            query,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            const container = document.querySelector(".container");
-            container.innerHTML = "";
-
-            const colors = data.colors;
-            for (const color of colors) {
-              const div = document.createElement("div");
-              div.classList.add("color"); // apply predefined styles
-              div.style.backgroundColor = color;
-              div.style.width = `calc(100%/${colors.length})`;
-
-              div.addEventListener("click", () =>
-                navigator.clipboard.writeText(color)
-              );
-
-              const span = document.createElement("span");
-              span.innerText = color;
-              div.appendChild(span);
-
-              container.appendChild(div);
-            }
-          });
-      });
-    </script>
-
-    <script></script>
+    <script src="app.js"></script>
   </body>
 </html>
